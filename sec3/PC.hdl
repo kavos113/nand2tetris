@@ -15,4 +15,12 @@ CHIP PC {
     
     PARTS:
     //// Replace this comment with your code.
+    Inc16(in=o1, out=oinc);
+    Mux16(a=oinc, b=in, sel=load, out=loaded);
+    Mux16(a=loaded, b[0..15]=false, sel=reset, out=input);
+
+    Or(a=inc, b=load, out=a1);
+    Or(a=a1, b=reset, out=flag);
+
+    Register(in=input, out=out, load=flag, out=o1);
 }
